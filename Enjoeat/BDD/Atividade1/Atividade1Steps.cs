@@ -1,4 +1,7 @@
-﻿using TechTalk.SpecFlow;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using TechTalk.SpecFlow;
+using TreinamentoSelenium.Exemplos.PageObjects.Exemplos;
 
 namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
 {
@@ -6,37 +9,42 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
     public class Atividade1Steps
     {
         private readonly IWebDriver Driver = ScenarioContext.Current.Get<IWebDriver>();
-        private EnjoeatPageObject _enjoeatPageObject;
-        private EnjoeatPageObject enjoeatPageObject
+        private CoffeeCorderPageObject _coffeCornerPageObject;
+        private CoffeeCorderPageObject coffeeCornerPageObject
         {
             get
             {
-                if (_enjoeatPageObject == null)
+                if(_coffeCornerPageObject == null)
                 {
-                    _enjoeatPageObject = new EnjoeatPageObject(Driver);
+                    _coffeCornerPageObject = new CoffeeCorderPageObject(Driver);
                 }
-
-                return _enjoeatPageObject;
+                return _coffeCornerPageObject;
             }
         }
+
+
         #region Cenário: Verificar itens do menu
         [Given(@"que escolho comprar do ""(.*)""")]
-        public void DadoQueEscolhoComprarDo(string p0)
+        public void DadoQueEscolhoComprarDo(string nomeRestaurante)
         {
-            enjoeatPageObject1.
-            ScenarioContext.Current.Pending();
+            Assert.AreEqual(nomeRestaurante, coffeeCornerPageObject.NomeRestaurant);
         }
 
         [When(@"eu vejo o menu")]
         public void QuandoEuVejoOMenu()
         {
-            ScenarioContext.Current.Pending();
+           //talvez não vá codigo aqui
         }
 
         [Then(@"eu visualizo os itens")]
-        public void EntaoEuVisualizoOsItens(Table table)
+        public void EntaoEuVisualizoOsItens(Table ItemsParaComprar)
         {
-            ScenarioContext.Current.Pending();
+            foreach (string row in ItemsParaComprar.Rows)
+            {
+                string nomeItem = row["NomeItem"].ToUpper();
+                string descricao = row["Descricao"];
+                string preco = row["Preco"];
+            }
         }
         #endregion
 
