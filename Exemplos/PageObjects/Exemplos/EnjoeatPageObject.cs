@@ -127,7 +127,6 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
                 default:
                     break;
             }
-       
             return posicao;
         }
 

@@ -27,23 +27,30 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
         [Given(@"que escolho comprar do ""(.*)""")]
         public void DadoQueEscolhoComprarDo(string nomeRestaurante)
         {
-            Assert.AreEqual(nomeRestaurante, coffeeCornerPageObject.NomeRestaurant);
+            new BaseTest().AcessaUrl(Driver, "https://test-sandbox.azurewebsites.net/restaurants/coffee-corner/menu");
+            Assert.AreEqual(nomeRestaurante, coffeeCornerPageObject.NomeRestaurant.Text);
         }
 
         [When(@"eu vejo o menu")]
         public void QuandoEuVejoOMenu()
         {
            //talvez não vá codigo aqui
+
+            //Colocar um assert aqui
         }
 
         [Then(@"eu visualizo os itens")]
         public void EntaoEuVisualizoOsItens(Table ItemsParaComprar)
         {
-            foreach (string row in ItemsParaComprar.Rows)
+            foreach (var row in ItemsParaComprar.Rows)
             {
-                string nomeItem = row["NomeItem"].ToUpper();
-                string descricao = row["Descricao"];
-                string preco = row["Preco"];
+                string nomeItem = row["Nome"].ToUpper();
+                string descricao = row["Descrição"];
+                string preco = row["Valor"];
+
+                Assert.AreEqual(nomeItem, coffeeCornerPageObject.RetornarItem(nomeItem));
+                Assert.AreEqual(descricao, coffeeCornerPageObject.RetornarDescricaoDoItem(nomeItem));
+                Assert.AreEqual(preco, coffeeCornerPageObject.RetornarPreco(nomeItem));
             }
         }
         #endregion
