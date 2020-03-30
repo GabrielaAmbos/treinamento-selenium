@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using System;
 using TechTalk.SpecFlow;
 using TreinamentoSelenium.Exemplos.PageObjects.Exemplos;
 
@@ -21,21 +23,38 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
                 return _coffeCornerPageObject;
             }
         }
+        private EnjoeatPageObject _enjoeatPageObject;
+        private EnjoeatPageObject enjoeatPageObject
+        {
+            get
+            {
+                if(_enjoeatPageObject == null)
+                {
+                    _enjoeatPageObject = new EnjoeatPageObject(Driver);
+                }
+                return _enjoeatPageObject;
+            }
+        }
 
 
         #region Cenário: Verificar itens do menu
         [Given(@"que escolho comprar do ""(.*)""")]
         public void DadoQueEscolhoComprarDo(string nomeRestaurante)
         {
-            new BaseTest().AcessaUrl(Driver, "https://test-sandbox.azurewebsites.net/restaurants/coffee-corner/menu");
-            Assert.AreEqual(nomeRestaurante, coffeeCornerPageObject.NomeRestaurant.Text);
+            new BaseTest().AcessaUrl(Driver, "https://test-sandbox.azurewebsites.net/restaurants/");
+            enjoeatPageObject.IrparaRestaurante(nomeRestaurante).Click();
+
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("img.box-img-detail")));
+
+            Assert.AreEqual(nomeRestaurante, enjoeatPageObject.NomeRestaurant.Text);
         }
 
         [When(@"eu vejo o menu")]
         public void QuandoEuVejoOMenu()
         {
            //talvez não vá codigo aqui
-
+           
             //Colocar um assert aqui
         }
 
@@ -59,7 +78,7 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
         [When(@"eu adiciono (.*) ""(.*)""")]
         public void QuandoEuAdiciono(int p0, string p1)
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [Then(@"exibe o valor total de ""(.*)""")]

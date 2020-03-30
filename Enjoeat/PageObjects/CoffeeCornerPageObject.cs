@@ -12,9 +12,6 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
             PageFactory.InitElements(this, new RetryingElementLocator(Driver, TimeSpan.FromSeconds(60)));
         }
 
-        [FindsBy(How = How.CssSelector, Using = "div#restaurant > div.box-header > h3.box-title")]
-        public IWebElement NomeRestaurant { get; set; }
-
         private IWebElement BuscarElementoItem(int posicao)
         {
             IWebElement elementoItem = Driver.FindElement(By.CssSelector($"mt-menu-item:nth-child({posicao}) > div.menu-item-info-box"));
@@ -57,12 +54,12 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
         public int BuscarPosicaoDoItem(string nomeItem)
         {
             int posicao = 0;
-            switch (nomeItem)
+            switch (nomeItem.ToUpper())
             {
                 case "CAPPUCCINO COM CHANTILLY":
                     posicao = 1;
                     break;
-                case "SUPER ESPRESO":
+                case "SUPER EXPRESSO":
                     posicao = 2;
                     break;
                 case "STARBUCKS COPYCAT":

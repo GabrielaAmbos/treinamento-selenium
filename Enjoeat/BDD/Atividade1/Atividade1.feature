@@ -22,7 +22,7 @@ Cenário: Adicionar itens ao carrinho
 	Quando eu adiciono 1 "Pão artesanal italiano"
 	E eu adiciono 2 "Cup Cake"
 	Então exibe o valor total de "R$ 19,90"
-
+	
 Cenário: Remover item do carrinho
 	Dado que escolho comprar do "Green Food"
 	Quando eu adiciono 1 "Suco Detox"

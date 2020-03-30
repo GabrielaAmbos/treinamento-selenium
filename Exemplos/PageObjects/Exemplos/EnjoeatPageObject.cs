@@ -16,14 +16,15 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
         [FindsBy(How = How.CssSelector, Using = "img[source='/assets/img/logo-gray.png']")]
         public IWebElement LogoEnjoeat { get; set; }
 
-        
+        [FindsBy(How = How.CssSelector, Using = "div#restaurant h3.box-title")]
+        public IWebElement NomeRestaurant { get; set; }
+
         [FindsBy(How = How.CssSelector, Using = "div[class='jumbotron welcome-jumbotron'] p")]
         public IWebElement Descricao { get; set; }
 
 
         [FindsBy(How = How.CssSelector, Using = "a[class='btn btn-danger btn-lg']")]
         public IWebElement BotaoRestaurantes { get; set; }
-
 
         public bool RetornarSeLogoExiste()
         {
@@ -61,6 +62,17 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
             var elementoRestaturante = BuscarElementorestaurante(posicao);
             restauranteEncontrado = elementoRestaturante.FindElement(By.CssSelector("span[class='place-info-box-text']")).Text;
                        
+            return restauranteEncontrado;
+        }
+
+        public IWebElement IrparaRestaurante(string restaurante)
+        {
+            IWebElement restauranteEncontrado;
+            int posicao = BuscarPosicao(restaurante);
+
+            var elementoRestaturante = BuscarElementorestaurante(posicao);
+            restauranteEncontrado = elementoRestaturante.FindElement(By.CssSelector("a[class='restaurant']"));
+
             return restauranteEncontrado;
         }
 
@@ -103,7 +115,7 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
         {
             int posicao = 0;
 
-            switch (restaurante)
+            switch (restaurante.ToUpper())
             {
                 case "BREAD & BAKERY":
                     posicao = 1;
@@ -124,7 +136,7 @@ namespace TreinamentoSelenium.Exemplos.PageObjects.Exemplos
                     posicao = 6;
                     break;
                 
-                default:
+                default: 
                     break;
             }
             return posicao;
