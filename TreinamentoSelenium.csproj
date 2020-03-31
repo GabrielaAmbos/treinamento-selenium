@@ -148,8 +148,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="Enjoeat\BDD\Atividade1\Atividade1Steps.cs" />
     <Compile Include="Enjoeat\CasosDeTeste\VerificarItensDoMenuTeste.cs" />
-    <Compile Include="Enjoeat\PageObjects\BreadAndBakeryPageObjetcs.cs" />
-    <Compile Include="Enjoeat\PageObjects\CoffeeCornerPageObject.cs" />
+    <Compile Include="Enjoeat\PageObjects\RestaurantPageObjects.cs" />
     <Compile Include="Exemplos\BDD\Exemplo1Steps.cs" />
     <Compile Include="Exemplos\CasosDeTeste\Exemplo1SemBDDTeste.cs" />
     <Compile Include="Exemplos\PageObjects\Exemplos\EnjoeatPageObject.cs" />

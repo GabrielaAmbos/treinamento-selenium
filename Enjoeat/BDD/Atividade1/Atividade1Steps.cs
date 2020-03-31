@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using TechTalk.SpecFlow;
+using TreinamentoSelenium.Enjoeat.PageObjects;
 using TreinamentoSelenium.Exemplos.PageObjects.Exemplos;
 
 namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
@@ -11,16 +12,17 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
     public class Atividade1Steps
     {
         private readonly IWebDriver Driver = ScenarioContext.Current.Get<IWebDriver>();
-        private CoffeeCorderPageObject _coffeCornerPageObject;
-        private CoffeeCorderPageObject coffeeCornerPageObject
+
+        private RestaurantPageObjects _restaurantPageObject;
+        private RestaurantPageObjects restaurantPageObject
         {
             get
             {
-                if(_coffeCornerPageObject == null)
+                if(_restaurantPageObject == null)
                 {
-                    _coffeCornerPageObject = new CoffeeCorderPageObject(Driver);
+                    _restaurantPageObject = new RestaurantPageObjects(Driver);
                 }
-                return _coffeCornerPageObject;
+                return _restaurantPageObject;
             }
         }
         private EnjoeatPageObject _enjoeatPageObject;
@@ -35,7 +37,6 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
                 return _enjoeatPageObject;
             }
         }
-
 
         #region Cenário: Verificar itens do menu
         [Given(@"que escolho comprar do ""(.*)""")]
@@ -67,24 +68,29 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
                 string descricao = row["Descrição"];
                 string preco = row["Valor"];
 
-                Assert.AreEqual(nomeItem, coffeeCornerPageObject.RetornarItem(nomeItem));
-                Assert.AreEqual(descricao, coffeeCornerPageObject.RetornarDescricaoDoItem(nomeItem));
-                Assert.AreEqual(preco, coffeeCornerPageObject.RetornarPreco(nomeItem));
+                Assert.AreEqual(nomeItem, restaurantPageObject.RetornarItem(nomeItem));
+                Assert.AreEqual(descricao, restaurantPageObject.RetornarDescricaoDoItem(nomeItem));
+                Assert.AreEqual(preco, restaurantPageObject.RetornarPreco(nomeItem));
             }
         }
         #endregion
 
         #region Cenário: Adicionar item ao carrinho
         [When(@"eu adiciono (.*) ""(.*)""")]
-        public void QuandoEuAdiciono(int p0, string p1)
+        public void QuandoEuAdiciono(int quantidade, string item)
         {
-            
+            for(int i = 0; i < quantidade; i++)
+            {
+                restaurantPageObject.adicionarItemAoCarrinho(item).Click();
+            }
+
+            Assert.AreEqual(item.ToUpper(), restaurantPageObject.RetornarItem(item));
         }
 
         [Then(@"exibe o valor total de ""(.*)""")]
-        public void EntaoExibeOValorTotalDe(string p0)
+        public void EntaoExibeOValorTotalDe(string precoTotal)
         {
-            ScenarioContext.Current.Pending();
+            Assert.AreEqual(precoTotal, restaurantPageObject.TotalCarrinho.Text);
         }
 
         #endregion

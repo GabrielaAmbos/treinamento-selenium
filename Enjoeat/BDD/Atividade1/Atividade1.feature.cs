@@ -134,7 +134,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Tradicional cappuccino com chantilly",
                             "R$ 9,90"});
                 table1.AddRow(new string[] {
-                            "SUPER ESPRESO",
+                            "SUPER EXPRESSO",
                             "Café expresso duplo.",
                             "R$ 12,50"});
                 table1.AddRow(new string[] {
