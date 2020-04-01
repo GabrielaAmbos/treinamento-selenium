@@ -16,13 +16,28 @@ namespace TreinamentoSelenium.Enjoeat.PageObjects
             PageFactory.InitElements(this, new RetryingElementLocator(Driver, TimeSpan.FromSeconds(60)));
         }
 
-        [FindsBy(How = How.CssSelector, Using = "tr:nth-child(2) td[class='text-right']:nth-child(2)")]
+        [FindsBy(How = How.CssSelector, Using = "tr:last-child td[class='text-right']:nth-child(2)")]
         public IWebElement TotalCarrinho { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "button.btn-danger")]
+        public IWebElement BotaoLimpar { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "a.btn-success")]
+        public IWebElement BotaoConfirmar { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = "p.text-center")]
+        public IWebElement FraseDoCarrinho { get; set; }
 
         private IWebElement BuscarElementoItem(int posicao)
         {
             IWebElement elementoItem = Driver.FindElement(By.CssSelector($"mt-menu-item:nth-child({posicao}) > div.menu-item-info-box"));
             return elementoItem;
+        }
+
+        public IWebElement PrimeiroItemDoCarrinho()
+        {
+            IWebElement primeiroElemento = Driver.FindElement(By.CssSelector("tr[class='']:first-child td[class='text-right']:nth-child(3) a"));
+            return primeiroElemento;
         }
         public string RetornarItem(string item)
         {
@@ -33,7 +48,8 @@ namespace TreinamentoSelenium.Enjoeat.PageObjects
             itemEncontrado = elementoItem.FindElement(By.CssSelector("span[class='menu-item-info-box-text']")).Text;
 
             return itemEncontrado;
-        }
+        } 
+
         public string RetornarPreco(string item)
         {
             string precoEncontrado;
@@ -75,18 +91,21 @@ namespace TreinamentoSelenium.Enjoeat.PageObjects
                 case "CUP CAKE":
                 case "CUP CAKE DE CHOC. BRANCO":
                 case "SUCO DETOX":
+                case "CLASSIC BURGER":
                     posicao = 1;
                     break;
                 case "SUPER EXPRESSO":
                 case "DONUT":
                 case "BOLO DE MORANGO":
                 case "HAMBURGER DE QUINOA":
+                case "BATATAS FRITAS":
                     posicao = 2;
                     break;
                 case "STARBUCKS COPYCAT":
                 case "PÃO ARTESANAL ITALIANO":
                 case "FATIA DE BOLO":
                 case "SALADA CEASAR":
+                case "REFRIGERANTE":
                     posicao = 3;
                     break;
 

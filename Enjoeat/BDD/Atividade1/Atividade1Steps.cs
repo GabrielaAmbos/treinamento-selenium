@@ -38,6 +38,19 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
             }
         }
 
+        private OrderPageObjects _orderPageObjects;
+        private OrderPageObjects orderPageObjects
+        {
+            get
+            {
+                if(_orderPageObjects == null)
+                {
+                    _orderPageObjects = new OrderPageObjects(Driver);
+                }
+                return _orderPageObjects;
+            }
+        }
+
         #region Cenário: Verificar itens do menu
         [Given(@"que escolho comprar do ""(.*)""")]
         public void DadoQueEscolhoComprarDo(string nomeRestaurante)
@@ -101,24 +114,30 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
 
         #region Cenário: Remover item do carrinho
         [When(@"removo o ""(.*)"" do carrinho")]
-        public void QuandoRemovoODoCarrinho(string p0)
+        public void QuandoRemovoODoCarrinho(string nomeItem)
         {
-            ScenarioContext.Current.Pending();
+            //REFAZER
+            //Fazer assertiva
+            restaurantPageObject.PrimeiroItemDoCarrinho().Click();
         }
 
         #endregion
 
         #region Cenário: Limpar carrinho
+
         [When(@"eu limpo o carrinho")]
         public void QuandoEuLimpoOCarrinho()
         {
-            ScenarioContext.Current.Pending();
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div[class='box-footer']:last-child")));
+
+            restaurantPageObject.BotaoLimpar.Click();
         }
 
-        [Then(@"vejo no carrinho a m ensagem ""(.*)""")]
-        public void EntaoVejoNoCarrinhoAMEnsagem(string p0)
+        [Then(@"vejo no carrinho a mensagem ""(.*)""")]
+        public void EntaoVejoNoCarrinhoAMEnsagem(string fraseDoCarrinho)
         {
-            ScenarioContext.Current.Pending();
+            Assert.AreEqual(fraseDoCarrinho, restaurantPageObject.FraseDoCarrinho.Text);
         }
 
         #endregion
@@ -127,19 +146,38 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
         [When(@"eu fecho o pedido")]
         public void QuandoEuFechoOPedido()
         {
-            ScenarioContext.Current.Pending();
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("div[class='box-footer']:last-child")));
+            restaurantPageObject.BotaoConfirmar.Click();
+
         }
 
-        [Then(@"eu preencho os dados (.*), (.*), (.*)")]
-        public void EntaoEuPreenchoOsDados(string p0, string p1, string p2, Table table)
+        [Then(@"eu preencho os dados")]
+        public void EntaoEuPreenchoOsDados(Table dadosCadastrais)
         {
-            ScenarioContext.Current.Pending();
+            foreach(var row in dadosCadastrais.Rows)
+            {
+                string nome = row["Nome"];
+                orderPageObjects.CampoNome.SendKeys(nome);
+                string email = row["E-mail"];
+                orderPageObjects.CampoEmail.SendKeys(email);
+                string confirmarEmail = row["Confirmação do e-mail"];
+                orderPageObjects.CampoConfirmarEmail.SendKeys(confirmarEmail);
+            }
         }
 
         [Then(@"preencho o endereço de entrega")]
-        public void EntaoPreenchoOEnderecoDeEntrega(Table table)
+        public void EntaoPreenchoOEnderecoDeEntrega(Table enderecoEntrega)
         {
-            ScenarioContext.Current.Pending();
+           foreach(var row in enderecoEntrega.Rows)
+            {
+                string endereco = row["Endereço"];
+                orderPageObjects.CampoEndereco.SendKeys(endereco);
+                string numero = row["Número"];
+                orderPageObjects.CampoNumero.SendKeys(numero);
+                string complemento = row["Complemento"];
+                orderPageObjects.CampoComplemento.SendKeys(complemento);
+            }
         }
 
         [Then(@"opto pelo pagamento com ""(.*)""")]

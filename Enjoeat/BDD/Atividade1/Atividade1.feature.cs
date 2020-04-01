@@ -369,7 +369,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("eu adiciono 3 \"Refrigerante\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
 #line 47
- testRunner.Then("exibe o valor total de \"R$ R$ 61,50\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("exibe o valor total de \"R$ 61,50\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
 #line 48
  testRunner.When("eu fecho o pedido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
@@ -383,7 +383,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "compradorteste@teste.com",
                             "compradorteste@teste.com"});
 #line 49
- testRunner.Then("eu preencho os dados <Nome>, <E-mail>, <Confirmação do e-mail>", ((string)(null)), table2, "Então ");
+ testRunner.Then("eu preencho os dados", ((string)(null)), table2, "Então ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Endereço",

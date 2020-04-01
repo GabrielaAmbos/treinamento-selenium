@@ -44,9 +44,9 @@ Cenário: Fechar pedido
 	Quando eu adiciono 2 "Classic Burger"
 	E eu adiciono 2 "Batatas fritas"
 	E eu adiciono 3 "Refrigerante"
-	Então exibe o valor total de "R$ R$ 61,50"
+	Então exibe o valor total de "R$ 61,50"
 	Quando eu fecho o pedido
-	Então eu preencho os dados <Nome>, <E-mail>, <Confirmação do e-mail>
+	Então eu preencho os dados
 		| Nome            | E-mail                   | Confirmação do e-mail    |
 		| Comprador teste | compradorteste@teste.com | compradorteste@teste.com |
 	E preencho o endereço de entrega
