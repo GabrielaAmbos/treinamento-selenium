@@ -181,9 +181,13 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
         }
 
         [Then(@"opto pelo pagamento com ""(.*)""")]
-        public void EntaoOptoPeloPagamentoCom(string p0)
+        public void EntaoOptoPeloPagamentoCom(string formaDePagamento)
         {
-            ScenarioContext.Current.Pending();
+            IWebElement pagamentoItem = orderPageObjects.RetornarFormaDePagamento(formaDePagamento);
+
+            pagamentoItem.FindElement(By.CssSelector("div")).Click();
+
+            Assert.AreEqual(formaDePagamento, pagamentoItem.FindElement(By.CssSelector("label")).Text);
         }
 
         [Then(@"exibe o os valores")]
