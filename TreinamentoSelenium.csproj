@@ -150,6 +150,7 @@
     <Compile Include="Enjoeat\CasosDeTeste\VerificarItensDoMenuTeste.cs" />
     <Compile Include="Enjoeat\PageObjects\OrderPageObjects.cs" />
     <Compile Include="Enjoeat\PageObjects\RestaurantPageObjects.cs" />
+    <Compile Include="Enjoeat\PageObjects\SumaryPageObjects.cs" />
     <Compile Include="Exemplos\BDD\Exemplo1Steps.cs" />
     <Compile Include="Exemplos\CasosDeTeste\Exemplo1SemBDDTeste.cs" />
     <Compile Include="Exemplos\PageObjects\Exemplos\EnjoeatPageObject.cs" />

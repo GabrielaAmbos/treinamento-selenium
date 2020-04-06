@@ -34,6 +34,11 @@ namespace TreinamentoSelenium.Enjoeat.PageObjects
         [FindsBy(How = How.CssSelector, Using = "input[formcontrolname='optionalAddress']")]
         public IWebElement CampoComplemento { get; set; }
 
+        [FindsBy(How = How.CssSelector, Using = "tbody:nth-child(2) tr:nth-child(1) td:nth-child(1) a:nth-child(1)")]
+        public IWebElement RemoverClassicBurguer { get; set; }
+
+        [FindsBy(How = How.CssSelector, Using = ".btn-success")]
+        public IWebElement FinalizarPedido { get; set; }
 
         private IWebElement BuscarElementoFormaDePagamento(int posicao)
         {
@@ -49,6 +54,44 @@ namespace TreinamentoSelenium.Enjoeat.PageObjects
             IWebElement elementoItem = BuscarElementoFormaDePagamento(posicao);
 
             return elementoItem;
+        }
+
+        private IWebElement BuscarFreteEPagamento(int posicao)
+        {
+            IWebElement freteEPagamento = Driver.FindElement(By.CssSelector($"tbody:nth-child(1) tr:nth-child({posicao})"));
+            return freteEPagamento;
+        }
+
+        public string RetornarPreco(string opcao)
+        {
+            string precoEncontrado;
+            int posicao = BuscarPosicaoDoFreteEPagamento(opcao);
+
+            var elementoItem = BuscarFreteEPagamento(posicao);
+            precoEncontrado = elementoItem.FindElement(By.CssSelector(" td")).Text;
+
+            return precoEncontrado;
+        }
+
+        public int BuscarPosicaoDoFreteEPagamento(string opcao)
+        {
+            int posicao = 0;
+
+            switch (opcao)
+            {
+                case "Itens":
+                    posicao = 1;
+                    break;
+                case "Frete":
+                    posicao = 2;
+                    break;
+                case "Valor Total":
+                    posicao = 3;
+                    break;
+                default:
+                    break;
+            }
+            return posicao;
         }
 
 

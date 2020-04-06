@@ -51,6 +51,20 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
             }
         }
 
+        private SumaryPageObjects _sumaryPageObjetcs;
+        private SumaryPageObjects sumaryPageObjetcs
+        {
+            get
+            {
+                if (_sumaryPageObjetcs == null)
+                {
+                    _sumaryPageObjetcs = new SumaryPageObjects(Driver);
+                }
+                return _sumaryPageObjetcs;
+            }
+        }
+
+
         #region Cenário: Verificar itens do menu
         [Given(@"que escolho comprar do ""(.*)""")]
         public void DadoQueEscolhoComprarDo(string nomeRestaurante)
@@ -191,45 +205,62 @@ namespace TreinamentoSelenium.Enjoeat.BDD.Atividade1
         }
 
         [Then(@"exibe o os valores")]
-        public void EntaoExibeOOsValores(Table table)
+        public void EntaoExibeOOsValores(Table precos)
         {
-            ScenarioContext.Current.Pending();
+            foreach(var row in precos.Rows)
+            {
+                string itens = row["Itens"];
+                string frete = row["Frete"].Replace("R$ ", "");
+                string total = row["Valor Total"].Replace("R$ ", "");
+
+                Assert.AreEqual(itens, orderPageObjects.RetornarPreco("Itens"));
+                Assert.AreEqual(frete, orderPageObjects.RetornarPreco("Frete").Replace("R$ ", ""));
+                Assert.AreEqual(total, orderPageObjects.RetornarPreco("Valor Total").Replace("R$ ", ""));
+            }
         }
 
         [When(@"eu removo (.*) ""Classic Burger")]
-        public void QuandoEuRemovoClassicBurger(int p0)
+        public void QuandoEuRemovoClassicBurger(int vezes)
         {
-            ScenarioContext.Current.Pending();
+            for (int i = 0; i < vezes; i++)
+            {
+                orderPageObjects.RemoverClassicBurguer.Click();
+            }
         }
 
         [When(@"eu finalizo o pedido")]
         public void QuandoEuFinalizoOPedido()
         {
-            ScenarioContext.Current.Pending();
+            orderPageObjects.FinalizarPedido.Click();
         }
 
         [Then(@"sou informado que o ""(.*)""")]
-        public void EntaoSouInformadoQueO(string p0)
-        {
-            ScenarioContext.Current.Pending();
+        public void EntaoSouInformadoQueO(string informacao)
+        { 
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("i.fa-star-o")));
+
+            Assert.AreEqual(informacao, sumaryPageObjetcs.InformacaoConcluido.Text);
         }
 
         [Then(@"vejo a mensagem ""(.*)""")]
-        public void EntaoVejoAMensagem(string p0)
+        public void EntaoVejoAMensagem(string mensagem)
         {
-            ScenarioContext.Current.Pending();
+            Assert.AreEqual(mensagem, sumaryPageObjetcs.Mensagem.Text);
         }
 
         [When(@"e avalio a experiência com (.*) estrelas")]
-        public void QuandoEAvalioAExperienciaComEstrelas(int p0)
+        public void QuandoEAvalioAExperienciaComEstrelas(int quant)
         {
-            ScenarioContext.Current.Pending();
+            sumaryPageObjetcs.AvaliarPedido(quant).Click();
         }
 
         [Then(@"(.*) estrelas ficam com a cor ""(.*)""")]
-        public void EntaoEstrelasFicamComACor(int p0, string p1)
+        public void EntaoEstrelasFicamComACor(int quant, string cor)
         {
-            ScenarioContext.Current.Pending();
+            var verificaEstrela = sumaryPageObjetcs.VerificarAvaliacao(quant);
+
+            Assert.AreEqual(sumaryPageObjetcs.BuscarCor(cor), verificaEstrela.GetCssValue("color"));
         }
 
         #endregion
