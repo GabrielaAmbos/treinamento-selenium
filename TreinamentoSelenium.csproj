@@ -147,6 +147,10 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="Enjoeat\BDD\Atividade1\Atividade1Steps.cs" />
+    <Compile Include="Enjoeat\CasosDeTeste\AdicionarItemAoCarrinhoTeste.cs" />
+    <Compile Include="Enjoeat\CasosDeTeste\RemoverItemDoCarrinhoTeste.cs" />
+    <Compile Include="Enjoeat\CasosDeTeste\LimparCarrinhoTeste.cs" />
+    <Compile Include="Enjoeat\CasosDeTeste\FecharPedidoTeste.cs" />
     <Compile Include="Enjoeat\CasosDeTeste\VerificarItensDoMenuTeste.cs" />
     <Compile Include="Enjoeat\PageObjects\OrderPageObjects.cs" />
     <Compile Include="Enjoeat\PageObjects\RestaurantPageObjects.cs" />
